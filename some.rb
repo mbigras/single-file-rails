@@ -1,5 +1,6 @@
 # https://gist.github.com/trevorturk/91cb43c79e71e3d23649f6d103217de7
 
+require 'rack'
 require 'action_controller/railtie'
 
 class HelloWorld < Rails::Application
@@ -7,17 +8,17 @@ class HelloWorld < Rails::Application
     root to: 'hello#world'
   end
 
-  config.secret_key_base = SecureRandom.hex(30)
+  config.secret_key_base = 'h'
   config.eager_load = false
   config.logger = Logger.new(STDOUT)
 end
 
 class HelloController < ActionController::Base
   def world
-    render plain: 'Hello, World!'
+    render plain: "hello world!\n"
   end
 end
 
 HelloWorld.initialize!
 
-run HelloWorld
+Rack::Handler::WEBrick.run HelloWorld
